@@ -3,9 +3,10 @@ const chaiHttp = require('chai-http');
 const app = require('../app');
 const sinon = require('sinon');
 const connection = require('../db/connection');
-chai.use(chaiHttp);
 
-const { expect } = chai;
+const { expect, use } = chai;
+
+use(chaiHttp);
 
 const returnTest = [{
   id: 1,
@@ -19,10 +20,10 @@ describe('METODO GET', () => {
   it('consulta a rota /tasks', async () => {
     sinon.stub(connection, 'execute').resolves(returnTest);
 
-    const request = await chai.request(app).get('/tasks');
+    const req = await chai.request(app).get('/tasks');
 
-    expect(request.body).to.deep.eq(returnTest[0]);
-    expect(request.status).to.be.eq(200);
+    expect(req.body).to.deep.eq(returnTest[0]);
+    expect(req.status).to.be.eq(200);
 
   });
 
@@ -31,12 +32,12 @@ describe('METODO GET', () => {
       message: "Nenhuma task encontrada"
     }]);
 
-    const request = await chai.request(app).get('/tasks/issoComCertezaNãoÉUmaTask');
+    const req = await chai.request(app).get('/tasks/issoComCertezaNãoÉUmaTask');
 
-    expect(request.body).to.deep.eq({
+    expect(req.body).to.deep.eq({
       message: "Nenhuma task encontrada"
     });
-    expect(request.status).to.be.eq(404);
+    expect(req.status).to.be.eq(404);
   });
 
   afterEach(sinon.restore);
