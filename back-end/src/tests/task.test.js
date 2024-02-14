@@ -8,7 +8,8 @@ const { expect } = chai;
 
 describe('testes', () => {
   it('1', async () => {
-    const request = await chai.request(app);
-    expect(1).to.be.equal(true)
+    const request = await chai.request(app).get('/tasks');
+    console.log(request.body)
+    expect(request.body).to.deep.eq({ message: 'eita' })
   })
 })
