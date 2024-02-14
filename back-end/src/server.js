@@ -5,6 +5,4 @@ const port = 6969;
 
 app.listen(port, async () => {
   console.log(`server rodando na porta ${port}`)
-  const teste = await connection.execute('SELECT "teste"')
-  console.log(teste)
 });
