@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:name', async (req, res) => {
   const { name } = req.params;
-  const [DB] = await connection.execute(`SELECT * FROM tasks WHERE task_name = "${name}"`);
+  const [DB] = await connection.execute(`SELECT * FROM tasks WHERE task_name LIKE "%${name}%"`);
 
   if (DB.length === 0 || "message" in DB) return res.status(404).json({ message: "Nenhuma task encontrada" });
 
