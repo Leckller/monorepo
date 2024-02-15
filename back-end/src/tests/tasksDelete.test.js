@@ -17,7 +17,15 @@ describe('METODO DELETE', () => {
     });
 
     expect(req.status).to.be.eq(200);
-    expect(req.body).json({ message: "As tarefas selecionadas foram apagadas" });
+    expect(req.body).to.deep.eq({ message: "As tarefas selecionadas foram apagadas" });
   });
+
+  it('Testa se retorna um erro se o id não for um número', async () => {
+    const req = await chai.request(app).delete('/deleteTask/issonãoéumnumero');
+
+    expect(req.status).to.be.eq(400);
+    expect(req.body).to.deep.eq({ message: "O id deve ser um número" })
+  });
+
   afterEach(sinon.restore);
-})
+});

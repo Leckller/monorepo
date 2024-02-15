@@ -1,11 +1,12 @@
 const express = require('express');
 const connection = require('../db/connection');
+const validate = require('../middlewares/deleteTaskMd');
 
 const router = express.Router();
 
 // Apaga as tasks selecionadas (por id)
 
-router.delete('/', async (req, res) => {
+router.delete('/', validate.validateIds, async (req, res) => {
 
   // array de id's
   const { selected } = req.body;
@@ -14,14 +15,18 @@ router.delete('/', async (req, res) => {
     await connection.execute(`DELETE FROM tasks WHERE id = ?`, [id]);
   });
 
-  res.status(200).json({ message: 'As tarefas selecionadas foram apagadas' });
+  res.status(200).json({ message: "As tarefas selecionadas foram apagadas" });
 
 });
 
 // Apaga uma Task por Id
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', validate.validateIdParam, async (req, res) => {
+  const { id } = req.params;
 
+  await connection.execute(`DELETE FROM tasks WHERE id = ?`, [id]);
+
+  res.status(200).json({ message: "Tarefa apagada" })
 });
 
 module.exports = router;
