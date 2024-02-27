@@ -6,6 +6,7 @@ const insertTask = async (name, data, limitData, importante, urgente) => {
   return query.insertId;
 };
 
+//?
 const selectTask = async (id = 0) => {
   if (id === 0) {
     const [query] = await connection
