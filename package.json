@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon .",
     "start": "node .",
-    "test": "mocha ./src/**/**/*.test.js"
+    "test": "mocha ./src/**/**/*.test.js",
+    "coverage": "nyc --all --include src/model --include src/services --include src/controllers mocha ./src/**/**/*.test.js --exit"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "eslint": "^8.57.0",
     "mocha": "8.4.0",
     "nodemon": "3.0.3",
+    "nyc": "15.1.0",
     "sinon": "11.1.1"
   }
 }
