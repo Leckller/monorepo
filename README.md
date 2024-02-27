@@ -5,9 +5,3 @@ Tecnologias utilizadas neste projeto :
   - Mocha / Chai / Sinon
   - Mysql
   - Docker
-
-* Front-End
-
-  - TypeScript
-  - React.js
-  - Tailwind
