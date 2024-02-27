@@ -6,21 +6,25 @@
   "scripts": {
     "dev": "nodemon .",
     "start": "node .",
-    "test": "mocha ./src/tests/*.test.js -exit"
+    "test": "mocha ./src/**/**/*.test.js",
+    "coverage": "nyc --all --include src/model --include src/services --include src/controllers mocha ./src/**/**/*.test.js --exit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "4.17.1",
+    "firebase-admin": "^12.0.0",
     "mysql2": "3.0.0"
   },
   "devDependencies": {
     "chai": "4.3.4",
     "chai-http": "4.3.0",
     "cors": "2.8.5",
+    "eslint": "^8.57.0",
     "mocha": "8.4.0",
     "nodemon": "3.0.3",
+    "nyc": "15.1.0",
     "sinon": "11.1.1"
   }
 }
