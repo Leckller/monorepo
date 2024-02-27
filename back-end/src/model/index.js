@@ -1,5 +1,5 @@
-const models = require('./tasks.model');
+const user = require('./user/user');
 
 module.exports = {
-  models
-};
+  user
+}
