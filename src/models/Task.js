@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-  const Task = sequelize.define("Task", {
+  const task = sequelize.define("task", {
     taskName: DataTypes.STRING
   }, {
-    timestamp: true
+    timestamps: false
   });
 
-  return Task;
+  return task;
 };

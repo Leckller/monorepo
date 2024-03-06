@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("taskUsers", {
+    await queryInterface.createTable("task_users", {
       taskId: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -30,6 +30,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("taskUsers");
+    await queryInterface.dropTable("task_users");
   }
 };
