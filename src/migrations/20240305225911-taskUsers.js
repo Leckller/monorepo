@@ -9,7 +9,7 @@ module.exports = {
         allowNull: false,
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
-        field: "task_id",
+        field: "taskId",
         references: {
           model: "tasks",
           key: "id"
@@ -20,7 +20,7 @@ module.exports = {
         allowNull: false,
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
-        field: "user_id",
+        field: "userId",
         references: {
           model: "users",
           key: "id"
