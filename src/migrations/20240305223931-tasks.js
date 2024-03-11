@@ -13,6 +13,9 @@ module.exports = {
       taskName: {
         type: Sequelize.STRING
       },
+      deadline: {
+        type: Sequelize.DATE
+      }
     });
   },
 
