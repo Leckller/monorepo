@@ -10,7 +10,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userName: Sequelize.STRING
+      nickName: {
+        unique: true,
+        type: Sequelize.STRING
+      },
+      email: {
+        unique: true,
+        type: Sequelize.STRING,
+      },
+      password: Sequelize.STRING
     });
   },
 
