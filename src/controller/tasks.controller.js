@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const midds = require("../middlewares");
 const { task, task_user, user } = require("../models");
 
 router.post("/", async (req, res) => {
@@ -25,12 +26,20 @@ router.get("/", async (req, res) => {
   res.status(200).json(tasks);
 });
 
-router.patch("/", async (req, res) => {
+router.patch("/:id", midds.tasks.taskExistsById, async (req, res) => {
+  const { taskName } = req.body;
+  const { id } = req.params;
 
+  await task.update({ taskName }, { where: { id } });
+  res.status(200).json({ message: "Task atualizada" });
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", midds.tasks.taskExistsById, async (req, res) => {
+  const { id } = req.params;
 
+  await task.destroy({ where: { id } });
+
+  res.status(200).json({ message: "Task deletada" });
 });
 
 module.exports = router;
