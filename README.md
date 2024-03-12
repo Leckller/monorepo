@@ -4,4 +4,5 @@ Tecnologias utilizadas neste projeto :
   - Node.js
   - Mocha / Chai / Sinon
   - Mysql
+  - Sequelize
   - Docker
