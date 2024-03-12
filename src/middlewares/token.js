@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
     if (!tokenExists) return res.status(404).json({ message: "Login inválido" });
 
     req.userLogin = isValidToken;
-
+    req.userId = tokenExists.id;
   } catch (err) {
     return res.status(400).json("Senha ou Login Incorretos");
   }

@@ -1,5 +1,7 @@
-module.exports = (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   const task_user = sequelize.define("task_user", {
+    userId: DataTypes.INTEGER,
+    taskId: DataTypes.INTEGER
   }, {
     timestamps: false,
     tableName: "task_users"
