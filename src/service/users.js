@@ -1,4 +1,4 @@
-const { task } = require("../models");
+const { user } = require("../models");
 
 const verifyFieldsLogin = async (body) => {
   const { email, password, nickName } = body;
@@ -12,7 +12,7 @@ const verifyFieldsLogin = async (body) => {
   if (!nickName) return {
     status: 400, message: "Insira um NickName"
   };
-  const nickExists = await task.findOne({ nickName });
+  const nickExists = await user.findOne({ where: { nickName } });
   if (nickExists) return {
     status: 226, message: `Ops... o nickName ${nickName} já está em uso`
   };

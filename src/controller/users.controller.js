@@ -1,10 +1,9 @@
 const express = require("express");
 const service = require("../service");
 const router = express.Router();
-const midds = require("../middlewares");
 
 const { JWT } = require("../utils");
-const { user, task_user } = require("../models");
+const { user } = require("../models");
 
 router.post("/", async (req, res) => {
   const { email, password, nickName } = req.body;
@@ -18,12 +17,6 @@ router.post("/", async (req, res) => {
   await user.create({ email, password, nickName });
 
   res.status(200).json(token);
-});
-
-router.get("/", midds.validToken, async (req, res) => {
-  const { userId } = req;
-  const getUserTasks = await task_user.findAll({ where: { id: userId } });
-  res.status(200).json(getUserTasks);
 });
 
 module.exports = router;

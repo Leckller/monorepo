@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
     models.user.belongsToMany(models.task, {
       as: "tasks",
       through: task_user,
-      foreingKey: "taskId",
-      otherKey: "userId"
+      foreingKey: "userId",
+      otherKey: "taskId"
     });
     models.task.belongsToMany(models.user, {
       as: "users",
       through: task_user,
-      foreingKey: "userId",
-      otherKey: "taskId"
+      foreingKey: "taskId",
+      otherKey: "userId"
     });
   };
 

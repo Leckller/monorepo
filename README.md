@@ -15,7 +15,8 @@ Tecnologias utilizadas neste projeto :
 
 Requisitos
 
-  1 - Deve ser possivel criar um usuario, e devolver um token do usuario.
-  (a partir daqui todos os requisitos devem verificar se o token é valido)
-  2 - Deve ser possivel criar, editar, apagar e ler uma tarefa.
+  1 - Deve ser possivel criar um usuario, e devolver um token do usuario. ok
+  (a partir daqui todos os requisitos devem verificar se o token é valido) ok
+
+  2 - Deve ser possivel criar, editar, apagar e ler uma tarefa. 
   
