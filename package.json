@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon .",
     "start": "node .",
-    "test": "mocha ./src/**/**/*.test.js",
+    "test": "mocha ./src/tests/*.test.js",
     "coverage": "nyc --all --include src/model --include src/services --include src/controllers mocha ./src/**/**/*.test.js --exit"
   },
   "keywords": [],
@@ -15,16 +15,20 @@
   "dependencies": {
     "express": "4.17.1",
     "firebase-admin": "^12.0.0",
-    "mysql2": "3.0.0"
+    "jsonwebtoken": "9.0.0",
+    "mysql2": "3.0.0",
+    "sequelize": "^6.3.4"
   },
   "devDependencies": {
     "chai": "4.3.4",
     "chai-http": "4.3.0",
     "cors": "2.8.5",
     "eslint": "^8.57.0",
-    "mocha": "8.4.0",
+    "mocha": "10.0.0",
     "nodemon": "3.0.3",
     "nyc": "15.1.0",
-    "sinon": "11.1.1"
+    "sequelize-cli": "6.6.1",
+    "sequelize-test-helpers": "1.4.3",
+    "sinon": "14.0.0"
   }
 }
