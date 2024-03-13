@@ -7,7 +7,7 @@ const { user } = require("../models");
 
 router.post("/", async (req, res) => {
   const { email, password, nickName } = req.body;
-  console.log(req.body);
+
   const verifyFields = await service.users.verifyFieldsLogin(req.body);
 
   if (verifyFields) return res.status(verifyFields.status).json({ message: verifyFields.message });
@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
 
   await user.create({ email, password, nickName });
 
-  res.status(200).json({ message: "Usuario criado com sucesso", token });
+  res.status(200).json(token);
 });
 
 module.exports = router;

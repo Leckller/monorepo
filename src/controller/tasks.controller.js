@@ -4,14 +4,14 @@ const midds = require("../middlewares");
 const { task, task_user, user } = require("../models");
 
 router.post("/", async (req, res) => {
-  const { taskName, deadline, description } = req.body;
+  const { taskName, deadline } = req.body;
 
   if (!taskName) return res.status(400).json("insira um nome para a tarefa");
 
   const data = new Date();
   data.setDate(data.getDate() + 1);
 
-  const addTask = await task.create({ taskName, deadline: deadline ? deadline : data, description });
+  const addTask = await task.create({ taskName, deadline: deadline ? deadline : data });
   await task_user.create({ taskId: addTask.id, userId: req.userId });
 
   res.status(200).json(addTask);
@@ -21,17 +21,16 @@ router.get("/", async (req, res) => {
   const { userId } = req;
   const tasks = await user.findAll({
     where: { id: userId },
-    attributes: { exclude: ["password"] },
     include: [{ model: task, as: "tasks", through: { attributes: [] } }]
   });
   res.status(200).json(tasks);
 });
 
 router.patch("/:id", midds.tasks.taskExistsById, async (req, res) => {
-  const { taskName, completed } = req.body;
+  const { taskName } = req.body;
   const { id } = req.params;
 
-  await task.update({ taskName, completed }, { where: { id } });
+  await task.update({ taskName }, { where: { id } });
   res.status(200).json({ message: "Task atualizada" });
 });
 

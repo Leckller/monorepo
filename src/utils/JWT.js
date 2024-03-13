@@ -11,7 +11,7 @@ const genToken = (payload) => {
 
 const verToken = (token) => {
   // Verifica se um token é valido
-  const verify = jwt.verify(token, secret);
+  const verify = jwt.verify(token, "ToFalingInLoveAgain");
   // Retorna o token traduzido
   return verify;
 };
