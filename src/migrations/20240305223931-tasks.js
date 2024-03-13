@@ -15,6 +15,14 @@ module.exports = {
       },
       deadline: {
         type: Sequelize.DATE
+      },
+      description: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      completed: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       }
     });
   },
