@@ -9,6 +9,7 @@ app.use(cors());
 
 app.use("/users", routes.users);
 app.use("/login", routes.login);
+
 app.use(midds.validToken);
 app.use("/tasks", routes.tasks);
 
