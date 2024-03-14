@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
   const addTask = await task.create({ taskName, deadline: deadline ? deadline : data, description });
   await task_user.create({ taskId: addTask.id, userId: req.userId });
 
-  res.status(200).json(addTask);
+  res.status(200).json({ message: "Task adicionada" });
 });
 
 router.get("/", async (req, res) => {
