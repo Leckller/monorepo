@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  # server:
+  #   image: node:18.18.2
+  #   environment:
+  #     - HOST: localhost
+  #     - PASSWORD: root
+  #     - USER: root
+  #     - port: 33061
+  #   volumes:
+  #     - ./:./
+  database:
+    image: mysql:8.0.29
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tasksDB
+    # volumes:
+    #   - ./start.sql:/docker-entrypoint-initdb.d/start.sql
+    ports:
+      - "33060:3306"

@@ -12,6 +12,7 @@ app.use(morgan("tiny"));
 app.get("/", (_req, res) => {
   res.status(200).json("Im Online!");
 });
+
 app.use("/users", routes.users);
 app.use("/login", routes.login);
 
