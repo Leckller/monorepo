@@ -3,9 +3,11 @@ const app = express();
 const routes = require("./controller");
 const midds = require("./middlewares");
 const cors = require("cors");
+const morgan = require("morgan");
 
+app.use(cors({ origin: "*" }));
 app.use(express.json());
-app.use(cors());
+app.use(morgan("tiny"));
 
 app.get("/", (_req, res) => {
   res.status(200).json("Im Online!");
