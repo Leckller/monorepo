@@ -11,18 +11,26 @@ export default {
         type: DataTypes.INTEGER
       },
       taskName: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       deadline: {
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        defaultValue: new Date()
       },
       description: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        defaultValue: ""
       },
       completed: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+      },
+      checks: {
+        type: DataTypes.ARRAY,
+        defaultValue: [],
+        allowNull: true
       }
     });
   },

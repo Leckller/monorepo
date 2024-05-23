@@ -4,10 +4,10 @@ import jwt from 'jsonwebtoken'
 
 const secret = process.env.JWT_SECRET as string;
 
-const genToken = (payload: UserWithNoId) => {
+const genToken = (payload: UserWithNoId): string => {
   // Gera um token
   const token = jwt.sign(payload, secret, { algorithm: "HS256" });
-  return { token };
+  return token;
 };
 
 const verToken = (token: string): UserWithNoId => {

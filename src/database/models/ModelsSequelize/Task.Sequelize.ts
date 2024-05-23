@@ -6,7 +6,7 @@ export type TaskWithNoId = Optional<Task, 'id'>;
 export type TaskModelType = Model<Task, TaskWithNoId>;
 type TaskSequelizeCreate = ModelDefined<Task, TaskWithNoId>;
 
-const SequelizeUser: TaskSequelizeCreate = db.define('Task', {
+const SequelizeTask: TaskSequelizeCreate = db.define('Task', {
   id: {
     primaryKey: true,
     autoIncrement: true,
@@ -14,22 +14,30 @@ const SequelizeUser: TaskSequelizeCreate = db.define('Task', {
     type: DataTypes.INTEGER
   },
   taskName: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   deadline: {
-    type: DataTypes.DATE
+    type: DataTypes.DATE,
+    defaultValue: new Date()
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
+    defaultValue: ""
   },
   completed: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
+  },
+  checks: {
+    type: DataTypes.ARRAY,
+    defaultValue: [],
+    allowNull: true
   }
 }, {
   tableName: 'tasks',
   timestamps: false,
 });
 
-export default SequelizeUser;
+export default SequelizeTask;

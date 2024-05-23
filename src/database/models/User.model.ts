@@ -1,12 +1,10 @@
-import { Optional } from 'sequelize';
 import SequelizeUser, { UserWithNoId } from './ModelsSequelize/User.Sequelize';
-import { User } from '../../types';
-import { JWT } from '../../../utils'
+import { JWT } from '../../utils';
 
 
 interface userMethods {
   Cadastro(login: UserWithNoId): Promise<string>
-  Login(login: UserWithNoId): Promise<string>
+  Login(login: UserWithNoId): Promise<string | undefined>
   EmailExists(Email: string): Promise<Boolean>
 }
 
@@ -26,27 +24,19 @@ class UserModel implements userMethods {
     return token
   }
 
-  async Login(fields: UserWithNoId): Promise<string> {
-
-  }
-
-  async findUserByEmail(email: string): Promise<User | undefined> {
-    const dbData = await this.db.findOne({ where: { email } });
-    if (!dbData) return undefined;
-    return dbData.dataValues;
-  }
-
-  async createUser(fields: Optional<User, 'id'>): Promise<User> {
+  async Login(fields: UserWithNoId): Promise<string | undefined> {
     const { email, password } = fields;
+    const query = await this.db.findOne({ where: { email } })
 
-    const createUser = await this.db.create({ email, password });
+    if (!query || query.dataValues.password !== password) return undefined
 
-    return createUser.dataValues;
+    const token = JWT.genToken({ email, password });
+    return token
   }
 
-  async deleteUser(id: number, email: string): Promise<void> {
-    await this.db.destroy({ where: { id, email } });
-  }
+  // async deleteUser(): Promise<void> {
+  //   await this.db.destroy({ where: { id, email } });
+  // }
 }
 
 export default new UserModel()
