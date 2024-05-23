@@ -10,7 +10,7 @@ interface userMethods {
   EmailExists(Email: string): Promise<Boolean>
 }
 
-export default class UserModel implements userMethods {
+class UserModel implements userMethods {
   private db = SequelizeUser;
 
   async EmailExists(email: string): Promise<Boolean> {
@@ -48,3 +48,5 @@ export default class UserModel implements userMethods {
     await this.db.destroy({ where: { id, email } });
   }
 }
+
+export default new UserModel()

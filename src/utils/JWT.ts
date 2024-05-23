@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { UserWithNoId } from '../src/database/models/ModelsSequelize/User.Sequelize';
+import { UserWithNoId } from '../database/models/ModelsSequelize/User.Sequelize';
 import jwt from 'jsonwebtoken'
 
 const secret = process.env.JWT_SECRET as string;
@@ -10,11 +10,11 @@ const genToken = (payload: UserWithNoId) => {
   return { token };
 };
 
-const verToken = (token: string) => {
+const verToken = (token: string): UserWithNoId => {
   // Verifica se um token é valido
   const verify = jwt.verify(token, secret);
   // Retorna o token traduzido
-  return verify;
+  return JSON.parse(verify as string);
 };
 
 const extToken = (auth: string) => {
@@ -23,7 +23,7 @@ const extToken = (auth: string) => {
   return extract;
 };
 
-module.exports = {
+export default {
   genToken,
   verToken,
   extToken,

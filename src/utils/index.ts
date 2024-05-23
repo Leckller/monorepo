@@ -1,3 +1,2 @@
-import * as JWT from './JWT'
-
+import JWT from './JWT'
 export { JWT }
