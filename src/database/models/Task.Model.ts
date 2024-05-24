@@ -1,8 +1,9 @@
 import SequelizeTask, { TaskWithNoId } from './ModelsSequelize/Task.Sequelize';
+import SequelizeTaskUser from './ModelsSequelize/TaskUser.Sequelize';
 
 
 interface TaskMethods {
-  novaTarefa(fields: TaskWithNoId): Promise<TaskWithNoId>
+  novaTarefa(fields: TaskWithNoId, userId: number): Promise<TaskWithNoId>
   deletarTarefa(tarefaId: number): Promise<boolean>
   editarTarefa(fields: TaskWithNoId): Promise<boolean>
   tarefaExists(tarefaId: number): Promise<boolean>
@@ -10,6 +11,7 @@ interface TaskMethods {
 
 class TaskModel implements TaskMethods {
   private db = SequelizeTask;
+  private bothDB = SequelizeTaskUser;
 
   async tarefaExists(tarefaId: number): Promise<boolean> {
     const query = await this.db.findOne({ where: { id: tarefaId } })
@@ -30,9 +32,10 @@ class TaskModel implements TaskMethods {
     return true
   }
 
-  async novaTarefa(fields: TaskWithNoId): Promise<TaskWithNoId> {
+  async novaTarefa(fields: TaskWithNoId, userId: number): Promise<TaskWithNoId> {
     const { completed, deadline, description, taskName, checks } = fields
     const query = await this.db.create({ completed, deadline, description, taskName, checks })
+    await this.bothDB.create({ taskId: query.dataValues.id, userId })
     return query.dataValues;
   }
 
