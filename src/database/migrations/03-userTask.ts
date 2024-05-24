@@ -15,7 +15,7 @@ export default {
         allowNull: false,
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
-        field: "taskId",
+        field: "task_id",
         references: {
           model: "tasks",
           key: "id"
@@ -26,7 +26,7 @@ export default {
         allowNull: false,
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
-        field: "userId",
+        field: "user_id",
         references: {
           model: "users",
           key: "id"

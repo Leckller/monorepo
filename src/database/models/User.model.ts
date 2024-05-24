@@ -1,20 +1,21 @@
 import SequelizeUser, { UserWithNoId } from './ModelsSequelize/User.Sequelize';
 import { JWT } from '../../utils';
+import { User } from '../../types';
 
 
 interface userMethods {
   Cadastro(login: UserWithNoId): Promise<string>
   Login(login: UserWithNoId): Promise<string | undefined>
-  EmailExists(Email: string): Promise<Boolean>
+  EmailExists(Email: string): Promise<{ ok: boolean, query: User | null }>
 }
 
 class UserModel implements userMethods {
   private db = SequelizeUser;
 
-  async EmailExists(email: string): Promise<Boolean> {
+  async EmailExists(email: string): Promise<{ ok: boolean, query: User | null }> {
     const query = await this.db.findOne({ where: { email } })
-    if (!query) return false
-    return true
+    if (!query) return { ok: false, query: null }
+    return { ok: true, query: query.dataValues }
   }
 
   async Cadastro(fields: UserWithNoId): Promise<string> {
@@ -24,12 +25,8 @@ class UserModel implements userMethods {
     return token
   }
 
-  async Login(fields: UserWithNoId): Promise<string | undefined> {
+  async Login(fields: UserWithNoId): Promise<string> {
     const { email, password } = fields;
-    const query = await this.db.findOne({ where: { email } })
-
-    if (!query || query.dataValues.password !== password) return undefined
-
     const token = JWT.genToken({ email, password });
     return token
   }

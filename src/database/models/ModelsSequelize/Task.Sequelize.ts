@@ -15,6 +15,7 @@ const SequelizeTask: TaskSequelizeCreate = db.define('Task', {
   },
   taskName: {
     type: DataTypes.STRING,
+    field: "task_name",
     allowNull: false,
   },
   deadline: {

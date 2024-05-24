@@ -12,6 +12,7 @@ export default {
       },
       taskName: {
         type: DataTypes.STRING,
+        field: "task_name",
         allowNull: false,
       },
       deadline: {

@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { UserWithNoId } from "../database/models/ModelsSequelize/User.Sequelize";
+import { messageService } from ".";
 
 export default interface User {
   id: number,
@@ -9,4 +10,9 @@ export default interface User {
 
 export interface ReqUser extends Request {
   userLogin: UserWithNoId
+}
+
+export interface UserServiceInt {
+  cadastro(fields: UserWithNoId): Promise<messageService<string>>
+  login(fields: UserWithNoId): Promise<messageService<string>>
 }

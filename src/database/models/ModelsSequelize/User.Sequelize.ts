@@ -2,6 +2,7 @@ import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 import db from '../index';
 import { User } from '../../../types';
 
+
 export type UserWithNoId = Optional<User, 'id'>;
 export type UserModelType = Model<User, UserWithNoId>;
 type UserSequelizeCreate = ModelDefined<User, UserWithNoId>;
