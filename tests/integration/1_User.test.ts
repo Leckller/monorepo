@@ -23,14 +23,16 @@ describe('Teste 1 - Rota User', function () {
 
     expect(req.status).to.be.eq(201);
     // Espera receber um token de retorno do servidor!!!
-    expect(typeof req.body).to.be.eq("string")
+    expect(req.body.message).to.be.eq("Cadastro realizado com sucesso.")
   });
 
   it('02 - Envia uma solicitação de cadastro com credenciais já cadastradas', async () => {
+    sinon.stub(SequelizeUser, "findOne").resolves(SequelizeUser.build(mock.createUser))
+
     const req = await chai.request(app).post('/user/cadastro').send(mock.createUser)
 
     expect(req.status).to.be.eq(400);
-    expect(req.body).to.deep.eq({ message: "Este email já está cadastrado." });
+    expect(req.body).to.deep.eq({ data: "", message: "Este email já está cadastrado." });
   });
 
   it('03 - Envia uma solicitação de cadastro com uma senha menor que 6 digitos', async () => {
@@ -40,25 +42,27 @@ describe('Teste 1 - Rota User', function () {
     })
 
     expect(req.status).to.be.eq(400);
-    expect(req.body).to.deep.eq({ message: "Sua senha deve ser maior que 6 digitos." });
+    expect(req.body).to.deep.eq({ data: "", message: "Sua senha deve ser maior que 6 digitos." });
   });
 
   it('04 - Envia uma solicitação de cadastro com um email invalido', async () => {
     const req = await chai.request(app).post('/user/cadastro').send({
       email: "admin@teste",
-      password: "senha"
+      password: "senhaPoderosa"
     })
 
     expect(req.status).to.be.eq(400);
-    expect(req.body).to.deep.eq({ message: "Email invalido." });
+    expect(req.body).to.deep.eq({ data: "", message: "Email invalido." });
   });
 
   it('05 - Envia uma solicitação de login', async () => {
+    sinon.stub(SequelizeUser, "findOne").resolves(SequelizeUser.build(mock.createUser))
+
     const req = await chai.request(app).post('/user/login').send(mock.createUser)
 
     expect(req.status).to.be.eq(200);
     // Espera receber um token de retorno do servidor!!!
-    expect(typeof req.body).to.be.eq("string")
+    expect(req.body.message).to.be.eq("Bem vindo de volta!")
   });
 
 

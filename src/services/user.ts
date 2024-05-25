@@ -20,16 +20,13 @@ export default class UserService implements UserServiceInt {
     }
 
     const data = await this.model.Cadastro({ email, password });
-    return { data, message: "Cadastro realizado com sucesso", status: 201 }
+    return { data, message: "Cadastro realizado com sucesso.", status: 201 }
 
   }
   async login(fields: UserWithNoId): Promise<messageService<string>> {
     const { email, password } = fields;
     const verifyEmail = await this.model.EmailExists(email);
-    if (verifyEmail.ok) {
-      return { data: "", message: "Este email já está cadastrado.", status: 400 }
-    }
-    if (verifyEmail.query?.password !== fields.password) {
+    if (!verifyEmail.ok || verifyEmail.query?.password !== fields.password) {
       return { data: "", message: "Login inválido", status: 400 }
     }
 
