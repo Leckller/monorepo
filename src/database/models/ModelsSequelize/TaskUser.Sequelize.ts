@@ -43,6 +43,6 @@ const SequelizeTaskUser: TaskUserSequelizeCreate = db.define('task_users', {
 });
 
 SequelizeTaskUser.hasOne(SequelizeUser, { as: "user", foreignKey: "user_id" });
-SequelizeTaskUser.hasOne(SequelizeTask, { as: "task", foreignKey: "task_id" })
+SequelizeTaskUser.hasMany(SequelizeTask, { as: "task", foreignKey: "task_id" })
 
 export default SequelizeTaskUser;

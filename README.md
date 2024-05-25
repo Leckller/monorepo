@@ -15,11 +15,13 @@ requisitos:
   
   2 -> Pagina de Tarefas
     1.1 - Deve ser possivel criar uma nova tarefa
-      1.1 - Os nomes das tarefas devem ser salvos em maiusculo
-      1.2 - Não deve ser possível adicionar outra tarefa de mesmo nome
+      <!-- 1.1 - Os nomes das tarefas devem ser salvos em maiusculo -->
+      <!-- 1.2 - Não deve ser possível adicionar outra tarefa de mesmo nome -->
       1.3 - A tarefa deve possuir um nome, uma descrição e se for solicidado uma lista de checks de no maximo 5
+      1.4 - Não deve ser possivel criar uma tarefa sem um token valido.
     1.2 - Deve ser possivel alterar os dados da tarefa
     1.3 - Deve ser possivel deletar uma tarefa
+    1.4 - Deve ser possivel acessar todas as tarefas de um unico usuario
 
 
 Tecnologias utilizadas neste projeto :
