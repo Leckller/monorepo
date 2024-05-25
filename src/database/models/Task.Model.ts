@@ -1,5 +1,6 @@
+import { Task } from '../../types';
 import SequelizeTask, { TaskWithNoId } from './ModelsSequelize/Task.Sequelize';
-import SequelizeTaskUser from './ModelsSequelize/TaskUser.Sequelize';
+import SequelizeUser from './ModelsSequelize/User.Sequelize';
 
 
 interface TaskMethods {
@@ -7,11 +8,12 @@ interface TaskMethods {
   deletarTarefa(tarefaId: number): Promise<boolean>
   editarTarefa(fields: TaskWithNoId): Promise<boolean>
   tarefaExists(tarefaId: number): Promise<boolean>
+  getTasks(userId: number): Promise<Task[]>
 }
 
-class TaskModel implements TaskMethods {
+export default class TaskModel implements TaskMethods {
   private db = SequelizeTask;
-  private bothDB = SequelizeTaskUser;
+  private userDB = SequelizeUser;
 
   async tarefaExists(tarefaId: number): Promise<boolean> {
     const query = await this.db.findOne({ where: { id: tarefaId } })
@@ -34,11 +36,15 @@ class TaskModel implements TaskMethods {
 
   async novaTarefa(fields: TaskWithNoId, userId: number): Promise<TaskWithNoId> {
     const { completed, deadline, description, taskName, checks } = fields
-    const query = await this.db.create({ completed, deadline, description, taskName, checks })
-    await this.bothDB.create({ taskId: query.dataValues.id, userId })
+    const query = await this.db.create({ completed, deadline, description, taskName, checks, userId })
     return query.dataValues;
   }
 
-}
+  async getTasks(userId: number): Promise<any[]> {
+    const query = await this.db.findAll({
+      where: { userId },
+    })
+    return query;
+  }
 
-export default new TaskModel()
+}

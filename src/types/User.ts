@@ -9,7 +9,7 @@ export default interface User {
 }
 
 export interface ReqUser extends Request {
-  userLogin: UserWithNoId
+  userLogin: User
 }
 
 export interface UserServiceInt {

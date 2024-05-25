@@ -4,8 +4,8 @@ import UserController from "../controller/user"
 
 const controller = new UserController();
 
-routerUser.use('/cadastro', controller.cadastro)
+routerUser.post('/cadastro', controller.cadastro)
 
-routerUser.use('/login', controller.login)
+routerUser.post('/login', controller.login)
 
 export default routerUser;

@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { UserWithNoId } from '../database/models/ModelsSequelize/User.Sequelize';
 import jwt from 'jsonwebtoken'
+import { User } from '../types';
 require('dotenv/config');
 
 const secret = process.env.JWT_SECRET as string || "itsNice";
@@ -11,9 +12,9 @@ const genToken = (payload: UserWithNoId): string => {
   return token;
 };
 
-const verToken = (token: string): UserWithNoId => {
+const verToken = (token: string): User => {
   // Verifica se um token é valido
-  const verify = jwt.verify(token, secret) as UserWithNoId;
+  const verify = jwt.verify(token, secret) as User;
   // Retorna o token traduzido
   return verify;
 };

@@ -35,6 +35,17 @@ const SequelizeTask: TaskSequelizeCreate = db.define('Task', {
     type: DataTypes.TEXT,
     defaultValue: "[]",
     allowNull: true
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    field: "user_id",
+    references: {
+      model: "users",
+      key: "id"
+    }
   }
 }, {
   tableName: 'tasks',

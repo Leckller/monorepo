@@ -7,7 +7,7 @@ export type UserWithNoId = Optional<User, 'id'>;
 export type UserModelType = Model<User, UserWithNoId>;
 type UserSequelizeCreate = ModelDefined<User, UserWithNoId>;
 
-const SequelizeUser: UserSequelizeCreate = db.define('User', {
+const SequelizeUser: UserSequelizeCreate = db.define('users', {
   id: {
     allowNull: false,
     autoIncrement: true,

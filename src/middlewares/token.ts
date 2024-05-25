@@ -12,7 +12,7 @@ export default async (req: ReqUser, res: Response, next: NextFunction) => {
     const noAuthToken = JWT.verToken(extractToken);
     const userExists = await model.EmailExists(noAuthToken.email)
 
-    if (!userExists.ok) return res.status(404).json({ data: "", message: "Senha ou Login Incorretos." });
+    if (!userExists.ok) return res.status(400).json({ data: "", message: "Senha ou Login Incorretos." });
 
     req.userLogin = noAuthToken;
   } catch (err) {

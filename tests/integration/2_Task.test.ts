@@ -16,6 +16,17 @@ const mockUser = {
   password: "poweredByMocha"
 }
 
+async function stubToken() {
+  sinon.stub(SequelizeUser, "findOne")
+    .onFirstCall().resolves(null)
+    .onSecondCall().resolves(SequelizeUser.build(mockUser));
+  sinon.stub(SequelizeUser, "create").resolves(SequelizeUser.build(mockUser));
+
+  const token = await chai.request(app).post("/user/cadastro")
+    .send(mockUser);
+  return token
+}
+
 describe('Teste 1 - Rota User', function () {
   beforeEach(function () {
     sinon.restore();
@@ -32,14 +43,7 @@ describe('Teste 1 - Rota User', function () {
   })
 
   it('02 - Cria uma tarefa', async () => {
-
-    sinon.stub(SequelizeUser, "findOne")
-      .onFirstCall().resolves(null)
-      .onSecondCall().resolves(SequelizeUser.build(mockUser));
-    sinon.stub(SequelizeUser, "create").resolves(SequelizeUser.build(mockUser));
-
-    const token = await chai.request(app).post("/user/cadastro")
-      .send(mockUser);
+    const token = await stubToken();
 
     sinon.stub(SequelizeTask, "create").resolves(SequelizeTask.build(mock.validTask))
     const req = await chai.request(app).post("/task/create")
@@ -52,12 +56,7 @@ describe('Teste 1 - Rota User', function () {
   })
 
   it('03 - Apaga uma tarefa', async () => {
-    sinon.stub(SequelizeUser, "findOne").resolves(null);
-    sinon.stub(SequelizeUser, "create").resolves(SequelizeUser.build(mockUser));
-
-    const token = await chai.request(app).post("/user/cadastro")
-      .send(mockUser);
-
+    const token = await stubToken();
 
     sinon.stub(SequelizeTask, "findOne").resolves(SequelizeTask.build(mock.validTask))
     sinon.stub(SequelizeTask, "destroy").resolves()
@@ -71,11 +70,7 @@ describe('Teste 1 - Rota User', function () {
   })
 
   it('04 - Edita uma tarefa', async () => {
-    sinon.stub(SequelizeUser, "findOne").resolves(null);
-    sinon.stub(SequelizeUser, "create").resolves(SequelizeUser.build(mockUser));
-
-    const token = await chai.request(app).post("/user/cadastro")
-      .send(mockUser);
+    const token = await stubToken();
 
     sinon.stub(SequelizeTask, "findOne").resolves(SequelizeTask.build(mock.validTask));
     sinon.stub(SequelizeTask, "update").resolves();
@@ -89,11 +84,7 @@ describe('Teste 1 - Rota User', function () {
   })
 
   it('05 - Cria uma tarefa com nome invalido', async () => {
-    sinon.stub(SequelizeUser, "findOne").resolves(null);
-    sinon.stub(SequelizeUser, "create").resolves(SequelizeUser.build(mockUser));
-
-    const token = await chai.request(app).post("/user/cadastro")
-      .send(mockUser);
+    const token = await stubToken();
 
     const req = await chai.request(app).post("/task/create")
       .set({ auth: `Bearer: ${token.body.data}` })
@@ -104,17 +95,13 @@ describe('Teste 1 - Rota User', function () {
   })
 
   it('06 - Faz uma requisição pedindo todas as tarefas do usuario', async () => {
-    sinon.stub(SequelizeUser, "findOne").resolves(null);
-    sinon.stub(SequelizeUser, "create").resolves(SequelizeUser.build(mockUser));
-
-    const token = await chai.request(app).post("/user/cadastro")
-      .send(mockUser);
+    const token = await stubToken();
 
     const req = await chai.request(app).get("/task")
       .set({ auth: `Bearer: ${token.body.data}` })
 
-    expect(req.status).to.eq(200);
     console.log(req.body);
+    expect(req.status).to.eq(200);
     // expect(req.body).to.deep.eq({ data: [], message: "Token invalido." });
   })
 

@@ -20,14 +20,15 @@ export default class UserModel implements userMethods {
 
   async Cadastro(fields: UserWithNoId): Promise<string> {
     const { email, password } = fields;
-    await this.db.create({ email, password });
-    const token = JWT.genToken({ email, password });
+    const data = await this.db.create({ email, password });
+    const token = JWT.genToken({ email, password, id: data.dataValues.id });
     return token
   }
 
   async Login(fields: UserWithNoId): Promise<string> {
     const { email, password } = fields;
-    const token = JWT.genToken({ email, password });
+    const data = await this.db.create({ email, password });
+    const token = JWT.genToken({ email, password, id: data.dataValues.id });
     return token
   }
 
