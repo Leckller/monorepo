@@ -27,10 +27,9 @@ async function stubToken() {
   return token
 }
 
-describe('Teste 1 - Rota User', function () {
+describe.only('Teste 2 - Rota Task', function () {
   beforeEach(function () {
     sinon.restore();
-
   });
 
   it('01 - Envia uma solicitação com um token invalido', async () => {
@@ -44,8 +43,8 @@ describe('Teste 1 - Rota User', function () {
 
   it('02 - Cria uma tarefa', async () => {
     const token = await stubToken();
-
     sinon.stub(SequelizeTask, "create").resolves(SequelizeTask.build(mock.validTask))
+
     const req = await chai.request(app).post("/task/create")
       .set({ auth: `Bearer: ${token.body.data}` })
       .send(mock.validTask)
@@ -57,7 +56,6 @@ describe('Teste 1 - Rota User', function () {
 
   it('03 - Apaga uma tarefa', async () => {
     const token = await stubToken();
-
     sinon.stub(SequelizeTask, "findOne").resolves(SequelizeTask.build(mock.validTask))
     sinon.stub(SequelizeTask, "destroy").resolves()
 
@@ -69,7 +67,7 @@ describe('Teste 1 - Rota User', function () {
     expect(req.body).to.deep.eq({ data: true, message: "Tarefa deletada." });
   })
 
-  it('04 - Edita uma tarefa', async () => {
+  it.only('04 - Edita uma tarefa', async () => {
     const token = await stubToken();
 
     sinon.stub(SequelizeTask, "findOne").resolves(SequelizeTask.build(mock.validTask));
@@ -77,7 +75,9 @@ describe('Teste 1 - Rota User', function () {
 
     const req = await chai.request(app).patch("/task/edit")
       .set({ auth: `Bearer: ${token.body.data}` })
-      .send({})
+      .send(mock.editValidTask)
+
+    console.log(req.body)
 
     expect(req.status).to.eq(200);
     expect(req.body).to.deep.eq({ data: true, message: "Tarefa editada." });
@@ -91,7 +91,7 @@ describe('Teste 1 - Rota User', function () {
       .send(mock.invalidNameTask)
 
     expect(req.status).to.eq(400);
-    expect(req.body).to.deep.eq({ data: "", message: "O nome da tarefa deve ter pelo menos 5 digitos." });
+    expect(req.body).to.deep.eq({ data: false, message: "O nome da tarefa deve ter pelo menos 5 digitos." });
   })
 
   it('06 - Faz uma requisição pedindo todas as tarefas do usuario', async () => {

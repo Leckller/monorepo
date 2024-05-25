@@ -2,11 +2,23 @@ import { TaskWithNoId } from '../../src/database/models/ModelsSequelize/Task.Seq
 
 export default class TaskMock {
   public validTask: TaskWithNoId = {
+    id: 1,
     taskName: "Caminhar 5km",
     completed: false,
     deadline: new Date(),
     description: "Na rua da caminhada; às 20:00H",
-    checks: [{ completed: false, text: "Beber uma garrafa d'agua" }]
+    checks: [{ completed: false, text: "Beber uma garrafa d'agua" }],
+    userId: 1
+  }
+
+  public editValidTask: TaskWithNoId = {
+    id: 1,
+    taskName: "Caminhar 10km",
+    completed: false,
+    deadline: new Date(),
+    description: "Na rua da caminhada; às 16:00H",
+    checks: [{ completed: false, text: "Beber uma garrafa d'agua" }],
+    userId: 1
   }
 
   public invalidNameTask: TaskWithNoId = {
@@ -14,6 +26,7 @@ export default class TaskMock {
     completed: false,
     deadline: new Date(),
     description: "Blablablabla",
-    checks: []
+    checks: [],
+    userId: 1
   }
 }

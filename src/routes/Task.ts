@@ -1,26 +1,16 @@
-import { Request, Response, Router } from "express";
-import TaskService from "../services/task";
-import { ReqUser } from "../types/User";
+import { Router } from "express";
+import TaskController from "../controller/task";
 
 const routerTask = Router();
 
-const service = new TaskService();
+const controller = new TaskController();
 
-routerTask.post('/create', (req: Request, res: Response) => {
-  res.status(200).json("Olá!")
-})
+routerTask.post('/create', controller.createTask)
 
-routerTask.delete('/delete', (req: Request, res: Response) => {
-  res.status(200).json("Olá!")
-})
+routerTask.delete('/delete', controller.deleteTask)
 
-routerTask.patch('/edit', (req: Request, res: Response) => {
-  res.status(200).json("Olá!")
-})
+routerTask.patch('/edit', controller.editTask)
 
-routerTask.get('/', async (req, res: Response) => {
-  const validate = await service.getTask(req as ReqUser)
-  res.status(200).json(validate)
-})
+routerTask.get('/', controller.getTasks)
 
 export default routerTask;
