@@ -4,6 +4,7 @@ import Task from "./Task";
 
 export type messageService<T> = {
   data: T,
+  status: number,
   message: string
 }
 

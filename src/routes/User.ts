@@ -1,12 +1,11 @@
 import { Router } from "express";
 const routerUser = Router();
+import UserController from "../controller/user"
 
-routerUser.use('/login', (req, res) => {
-  res.status(200).json("Olá!")
-})
+const controller = new UserController();
 
-routerUser.use('/cadastro', (req, res) => {
-  res.status(200).json("Olá!")
-})
+routerUser.use('/cadastro', controller.cadastro)
+
+routerUser.use('/login', controller.login)
 
 export default routerUser;

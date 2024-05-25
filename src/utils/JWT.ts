@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { UserWithNoId } from '../database/models/ModelsSequelize/User.Sequelize';
 import jwt from 'jsonwebtoken'
+require('dotenv/config');
 
 const secret = process.env.JWT_SECRET as string;
 

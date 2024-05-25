@@ -29,8 +29,8 @@ export default {
         defaultValue: false
       },
       checks: {
-        type: DataTypes.ARRAY,
-        defaultValue: [],
+        type: DataTypes.TEXT,
+        defaultValue: "[]",
         allowNull: true
       }
     });

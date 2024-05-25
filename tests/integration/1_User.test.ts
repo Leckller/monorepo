@@ -56,7 +56,7 @@ describe('Teste 1 - Rota User', function () {
   it('05 - Envia uma solicitação de login', async () => {
     const req = await chai.request(app).post('/user/login').send(mock.createUser)
 
-    expect(req.status).to.be.eq(201);
+    expect(req.status).to.be.eq(200);
     // Espera receber um token de retorno do servidor!!!
     expect(typeof req.body).to.be.eq("string")
   });
