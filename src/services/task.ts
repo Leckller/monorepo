@@ -34,7 +34,10 @@ export default class TaskService {
       return { data: false, message: "Tarefa não encontrada", status: 404 }
     }
 
-    await model.editarTarefa({ checks, completed, deadline, description, taskName });
+    const data = await model.editarTarefa({ checks, completed, deadline, description, taskName });
+    if (!data) {
+      return { data: false, message: "Ocorreu um erro durante a edição da tarefa.", status: 200 }
+    }
     return { data: true, message: "Tarefa editada.", status: 200 }
   }
 

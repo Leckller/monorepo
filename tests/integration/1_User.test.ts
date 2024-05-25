@@ -66,5 +66,7 @@ describe('Teste 1 - Rota User', function () {
   });
 
 
-
+  afterEach(function () {
+    sinon.restore()
+  })
 });

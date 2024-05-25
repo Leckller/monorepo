@@ -25,10 +25,14 @@ export default class TaskModel implements TaskMethods {
 
   async editarTarefa(fields: Omit<TaskWithNoId, "userId">): Promise<boolean> {
     const { completed, deadline, description, taskName, checks } = fields
-    await this.db.update({
-      checks, completed, deadline, description, taskName
-    }, { where: { id: fields.id } })
-    return true
+    try {
+      await this.db.update({
+        checks, completed, deadline, description, taskName
+      }, { where: { id: fields.id } })
+      return true
+    } catch (error) {
+      return false
+    }
   }
 
   async novaTarefa(fields: TaskWithNoId): Promise<TaskWithNoId> {

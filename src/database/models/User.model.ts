@@ -26,9 +26,8 @@ export default class UserModel implements userMethods {
   }
 
   async Login(fields: UserWithNoId): Promise<string> {
-    const { email, password } = fields;
-    const data = await this.db.create({ email, password });
-    const token = JWT.genToken({ email, password, id: data.dataValues.id });
+    const { email, password, id } = fields;
+    const token = JWT.genToken({ email, password, id: id });
     return token
   }
 
