@@ -96,13 +96,14 @@ describe('Teste 2 - Rota Task', function () {
 
   it('06 - Faz uma requisição pedindo todas as tarefas do usuario', async () => {
     const token = await stubToken();
+    const mockBuildTask = SequelizeTask.bulkBuild([mock.editValidTask]);
+    sinon.stub(SequelizeTask, "findAll").resolves(mockBuildTask)
 
     const req = await chai.request(app).get("/task")
       .set({ auth: `Bearer: ${token.body.data}` })
 
-    console.log(req.body);
     expect(req.status).to.eq(200);
-    // expect(req.body).to.deep.eq({ data: [], message: "Token invalido." });
+    expect(req.body).to.deep.eq({ data: [mock.editValidTask], message: "" });
   })
 
   afterEach(function () {

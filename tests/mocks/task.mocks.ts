@@ -15,7 +15,7 @@ export default class TaskMock {
     id: 1,
     taskName: "Caminhar 10km",
     completed: false,
-    deadline: new Date(),
+    deadline: "2024-05-25T18:43:18.626Z" as unknown as Date,
     description: "Na rua da caminhada; às 16:00H",
     checks: [{ completed: false, text: "Beber uma garrafa d'agua" }],
     userId: 1
