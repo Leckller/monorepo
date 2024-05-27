@@ -1,14 +1,15 @@
+import { Task } from '../../types';
 import SequelizeTask, { TaskWithNoId } from './ModelsSequelize/Task.Sequelize';
 
-
 interface TaskMethods {
-  novaTarefa(fields: TaskWithNoId): Promise<TaskWithNoId>
+  novaTarefa(fields: TaskWithNoId, userId: number): Promise<TaskWithNoId>
   deletarTarefa(tarefaId: number): Promise<boolean>
   editarTarefa(fields: TaskWithNoId): Promise<boolean>
   tarefaExists(tarefaId: number): Promise<boolean>
+  getTasks(userId: number): Promise<Task[]>
 }
 
-class TaskModel implements TaskMethods {
+export default class TaskModel implements TaskMethods {
   private db = SequelizeTask;
 
   async tarefaExists(tarefaId: number): Promise<boolean> {
@@ -22,20 +23,29 @@ class TaskModel implements TaskMethods {
     return true;
   }
 
-  async editarTarefa(fields: TaskWithNoId): Promise<boolean> {
+  async editarTarefa(fields: Omit<TaskWithNoId, "userId">): Promise<boolean> {
     const { completed, deadline, description, taskName, checks } = fields
-    await this.db.update({
-      checks, completed, deadline, description, taskName
-    }, { where: { id: fields.id } })
-    return true
+    try {
+      await this.db.update({
+        checks, completed, deadline, description, taskName
+      }, { where: { id: fields.id } })
+      return true
+    } catch (error) {
+      return false
+    }
   }
 
   async novaTarefa(fields: TaskWithNoId): Promise<TaskWithNoId> {
-    const { completed, deadline, description, taskName, checks } = fields
-    const query = await this.db.create({ completed, deadline, description, taskName, checks })
+    const { completed, deadline, description, taskName, checks, userId } = fields
+    const query = await this.db.create({ completed, deadline, description, taskName, checks, userId })
     return query.dataValues;
   }
 
-}
+  async getTasks(userId: number): Promise<any[]> {
+    const query = await this.db.findAll({
+      where: { userId },
+    })
+    return query;
+  }
 
-export default new TaskModel()
+}

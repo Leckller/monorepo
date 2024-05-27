@@ -1,13 +1,14 @@
 import { Router } from "express";
+import routerTask from "./Task";
+import routerUser from "./User";
+import { token as tokenMiddleware } from "../middlewares";
+import { ReqUser } from "../types/User";
 
 const mainRouter = Router();
 
-// Você pode apagar isso aqui
-mainRouter.use('/', (req, res) => {
-  res.status(200).json("Olá!")
-})
+mainRouter.use('/user', routerUser);
 
-// Para usar outro Router siga o seguinte exemplo
-// ex: mainRouter.use("/(rota)", anotherRouter)
+mainRouter.use((req, res, next) => { tokenMiddleware(req as ReqUser, res, next) });
+mainRouter.use('/task', routerTask);
 
 export default mainRouter;

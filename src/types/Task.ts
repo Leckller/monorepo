@@ -10,4 +10,5 @@ export default interface Task {
   description: string;
   checks: checks[]
   completed: boolean
+  userId: number
 }

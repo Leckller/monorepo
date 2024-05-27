@@ -15,6 +15,7 @@ const SequelizeTask: TaskSequelizeCreate = db.define('Task', {
   },
   taskName: {
     type: DataTypes.STRING,
+    field: "task_name",
     allowNull: false,
   },
   deadline: {
@@ -31,9 +32,20 @@ const SequelizeTask: TaskSequelizeCreate = db.define('Task', {
     defaultValue: false
   },
   checks: {
-    type: DataTypes.ARRAY,
-    defaultValue: [],
+    type: DataTypes.TEXT,
+    defaultValue: "[]",
     allowNull: true
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+    field: "user_id",
+    references: {
+      model: "users",
+      key: "id"
+    }
   }
 }, {
   tableName: 'tasks',
