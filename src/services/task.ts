@@ -6,12 +6,12 @@ const model = new TaskModel();
 
 export default class TaskService {
   async createTask(fields: TaskWithNoId): Promise<messageService<boolean>> {
-    const { userId, checks, completed, deadline, description, taskName, } = fields;
+    const { userId, completed, deadline, description, taskName, } = fields;
     if (taskName.length < 5) {
       return { data: false, message: "O nome da tarefa deve ter pelo menos 5 digitos.", status: 400 }
     }
     const data = await model.novaTarefa({
-      userId, checks, completed, deadline, description, taskName,
+      userId, completed, deadline, description, taskName,
     });
     if (!data) {
       return { data: false, message: "Parece que ocorreu algum problema", status: 400 }
@@ -28,13 +28,13 @@ export default class TaskService {
     return { data: true, message: "Tarefa deletada.", status: 200 }
   }
   async editTask(fields: Task): Promise<messageService<boolean>> {
-    const { checks, completed, deadline, description, id, taskName } = fields;
+    const { completed, deadline, description, id, taskName } = fields;
     const taskExists = await model.tarefaExists(id);
     if (!taskExists) {
       return { data: false, message: "Tarefa não encontrada", status: 404 }
     }
 
-    const data = await model.editarTarefa({ checks, completed, deadline, description, taskName });
+    const data = await model.editarTarefa({ completed, deadline, description, taskName });
     if (!data) {
       return { data: false, message: "Ocorreu um erro durante a edição da tarefa.", status: 200 }
     }

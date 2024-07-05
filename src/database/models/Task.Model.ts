@@ -24,10 +24,10 @@ export default class TaskModel implements TaskMethods {
   }
 
   async editarTarefa(fields: Omit<TaskWithNoId, "userId">): Promise<boolean> {
-    const { completed, deadline, description, taskName, checks } = fields
+    const { completed, deadline, description, taskName,} = fields
     try {
       await this.db.update({
-        checks, completed, deadline, description, taskName
+       completed, deadline, description, taskName
       }, { where: { id: fields.id } })
       return true
     } catch (error) {
@@ -36,8 +36,8 @@ export default class TaskModel implements TaskMethods {
   }
 
   async novaTarefa(fields: TaskWithNoId): Promise<TaskWithNoId> {
-    const { completed, deadline, description, taskName, checks, userId } = fields
-    const query = await this.db.create({ completed, deadline, description, taskName, checks, userId })
+    const { completed, deadline, description, taskName, userId } = fields
+    const query = await this.db.create({ completed, deadline, description, taskName, userId })
     return query.dataValues;
   }
 

@@ -13,8 +13,7 @@ export default async (req: ReqUser, res: Response, next: NextFunction) => {
     const userExists = await model.EmailExists(noAuthToken.email)
 
     if (!userExists.ok) return res.status(400).json({ data: "", message: "Senha ou Login Incorretos." });
-
-    req.userLogin = noAuthToken;
+    req.userLogin = {...noAuthToken, id: userExists.query?.id as number};
   } catch (err) {
     return res.status(400).json({ data: "", message: "Senha ou Login Incorretos." });
   }
