@@ -5,7 +5,7 @@ import { Task, messageService } from "../types";
 const model = new TaskModel();
 
 export default class TaskService {
-  async createTask(fields: TaskWithNoId): Promise<messageService<boolean>> {
+  async createTask(fields: TaskWithNoId): Promise<messageService<boolean | TaskWithNoId>> {
     const { userId, completed, deadline, description, taskName, } = fields;
     if (taskName.length < 5) {
       return { data: false, message: "O nome da tarefa deve ter pelo menos 5 digitos.", status: 400 }
@@ -14,9 +14,9 @@ export default class TaskService {
       userId, completed, deadline, description, taskName,
     });
     if (!data) {
-      return { data: false, message: "Parece que ocorreu algum problema", status: 400 }
+      return { data, message: "Parece que ocorreu algum problema", status: 400 }
     }
-    return { data: true, message: "Tarefa criada.", status: 201 }
+    return { data, message: "Tarefa criada.", status: 201 }
   }
 
   async deleteTask(tarefaId: number): Promise<messageService<boolean>> {

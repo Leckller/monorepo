@@ -9,7 +9,6 @@ export default class TaskController {
   async createTask(req: Request, res: Response) {
     const { userLogin: { id } } = req as ReqUser;
     const { completed, deadline, description, taskName } = req.body;
-    console.log(id)
     const { data, message, status } = await service.createTask({ completed, deadline, description, taskName, userId: id });
 
     res.status(status).json({ data, message });
