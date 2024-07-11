@@ -67,7 +67,7 @@ describe('Teste 2 - Rota Task', function () {
     expect(req.body).to.deep.eq({ data: true, message: "Tarefa deletada." });
   })
 
-  it.skip('04 - Edita uma tarefa', async () => {
+  it('04 - Edita uma tarefa', async () => {
     const token = await stubToken();
 
     sinon.stub(SequelizeTask, "findOne").resolves(SequelizeTask.build(mock.validTask));

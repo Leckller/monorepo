@@ -4,7 +4,7 @@ import SequelizeTask, { TaskWithNoId } from './ModelsSequelize/Task.Sequelize';
 interface TaskMethods {
   novaTarefa(fields: TaskWithNoId, userId: number): Promise<TaskWithNoId>
   deletarTarefa(tarefaId: number): Promise<boolean>
-  editarTarefa(fields: TaskWithNoId): Promise<boolean>
+  editarTarefa(fields: Task): Promise<boolean>
   tarefaExists(tarefaId: number): Promise<boolean>
   getTasks(userId: number): Promise<Task[]>
 }
@@ -23,14 +23,15 @@ export default class TaskModel implements TaskMethods {
     return true;
   }
 
-  async editarTarefa(fields: Omit<TaskWithNoId, "userId">): Promise<boolean> {
-    const { completed, deadline, description, taskName,} = fields
+  async editarTarefa(fields: Omit<Task, "userId">): Promise<boolean> {
+    const { completed, deadline, description, taskName, id} = fields
     try {
       await this.db.update({
        completed, deadline, description, taskName
-      }, { where: { id: fields.id } })
+      }, { where: { id } })
       return true
     } catch (error) {
+      console.log(error)
       return false
     }
   }

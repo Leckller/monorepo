@@ -27,14 +27,14 @@ export default class TaskService {
     await model.deletarTarefa(tarefaId)
     return { data: true, message: "Tarefa deletada.", status: 200 }
   }
-  async editTask(fields: Task): Promise<messageService<boolean>> {
+  async editTask(fields: Omit<Task, "userId">): Promise<messageService<boolean>> {
     const { completed, deadline, description, id, taskName } = fields;
     const taskExists = await model.tarefaExists(id);
     if (!taskExists) {
       return { data: false, message: "Tarefa não encontrada", status: 404 }
     }
 
-    const data = await model.editarTarefa({ completed, deadline, description, taskName });
+    const data = await model.editarTarefa({ completed, deadline, description, taskName, id });
     if (!data) {
       return { data: false, message: "Ocorreu um erro durante a edição da tarefa.", status: 200 }
     }
