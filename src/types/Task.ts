@@ -8,7 +8,6 @@ export default interface Task {
   taskName: string;
   deadline: Date;
   description: string;
-  checks: checks[]
   completed: boolean
   userId: number
 }

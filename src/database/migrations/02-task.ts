@@ -16,8 +16,8 @@ export default {
         allowNull: false,
       },
       deadline: {
-        type: DataTypes.DATE,
-        defaultValue: new Date()
+        type: DataTypes.STRING,
+        defaultValue: "01-02-2000"
       },
       description: {
         type: DataTypes.STRING,
@@ -27,11 +27,6 @@ export default {
       completed: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
-      },
-      checks: {
-        type: DataTypes.TEXT,
-        defaultValue: "[]",
-        allowNull: true
       },
       userId: {
         type: DataTypes.INTEGER,

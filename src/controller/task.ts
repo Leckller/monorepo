@@ -8,9 +8,8 @@ export default class TaskController {
 
   async createTask(req: Request, res: Response) {
     const { userLogin: { id } } = req as ReqUser;
-    const { checks, completed, deadline, description, taskName } = req.body;
-
-    const { data, message, status } = await service.createTask({ checks, completed, deadline, description, taskName, userId: id });
+    const { completed, deadline, description, taskName } = req.body;
+    const { data, message, status } = await service.createTask({ completed, deadline, description, taskName, userId: id });
 
     res.status(status).json({ data, message });
   }
@@ -30,10 +29,9 @@ export default class TaskController {
   }
 
   async editTask(req: Request, res: Response) {
-    const { userLogin: { id } } = req as ReqUser;
-    const { checks, completed, deadline, description, taskName } = req.body;
+    const {  completed, deadline, description, taskName, id } = req.body;
 
-    const { data, message, status } = await service.createTask({ checks, completed, deadline, description, taskName, userId: id });
+    const { data, message, status } = await service.editTask({ completed, deadline,description, taskName, id });
 
     res.status(status).json({ data, message });
 

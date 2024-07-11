@@ -5,18 +5,18 @@ import { Task, messageService } from "../types";
 const model = new TaskModel();
 
 export default class TaskService {
-  async createTask(fields: TaskWithNoId): Promise<messageService<boolean>> {
-    const { userId, checks, completed, deadline, description, taskName, } = fields;
+  async createTask(fields: TaskWithNoId): Promise<messageService<boolean | TaskWithNoId>> {
+    const { userId, completed, deadline, description, taskName, } = fields;
     if (taskName.length < 5) {
       return { data: false, message: "O nome da tarefa deve ter pelo menos 5 digitos.", status: 400 }
     }
     const data = await model.novaTarefa({
-      userId, checks, completed, deadline, description, taskName,
+      userId, completed, deadline, description, taskName,
     });
     if (!data) {
-      return { data: false, message: "Parece que ocorreu algum problema", status: 400 }
+      return { data, message: "Parece que ocorreu algum problema", status: 400 }
     }
-    return { data: true, message: "Tarefa criada.", status: 201 }
+    return { data, message: "Tarefa criada.", status: 201 }
   }
 
   async deleteTask(tarefaId: number): Promise<messageService<boolean>> {
@@ -27,14 +27,14 @@ export default class TaskService {
     await model.deletarTarefa(tarefaId)
     return { data: true, message: "Tarefa deletada.", status: 200 }
   }
-  async editTask(fields: Task): Promise<messageService<boolean>> {
-    const { checks, completed, deadline, description, id, taskName } = fields;
+  async editTask(fields: Omit<Task, "userId">): Promise<messageService<boolean>> {
+    const { completed, deadline, description, id, taskName } = fields;
     const taskExists = await model.tarefaExists(id);
     if (!taskExists) {
       return { data: false, message: "Tarefa não encontrada", status: 404 }
     }
 
-    const data = await model.editarTarefa({ checks, completed, deadline, description, taskName });
+    const data = await model.editarTarefa({ completed, deadline, description, taskName, id });
     if (!data) {
       return { data: false, message: "Ocorreu um erro durante a edição da tarefa.", status: 200 }
     }

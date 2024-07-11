@@ -7,7 +7,6 @@ export default class TaskMock {
     completed: false,
     deadline: new Date(),
     description: "Na rua da caminhada; às 20:00H",
-    checks: [{ completed: false, text: "Beber uma garrafa d'agua" }],
     userId: 1
   }
 
@@ -17,7 +16,6 @@ export default class TaskMock {
     completed: false,
     deadline: "2024-05-25T18:43:18.626Z" as unknown as Date,
     description: "Na rua da caminhada; às 16:00H",
-    checks: [{ completed: false, text: "Beber uma garrafa d'agua" }],
     userId: 1
   }
 
@@ -26,7 +24,6 @@ export default class TaskMock {
     completed: false,
     deadline: new Date(),
     description: "Blablablabla",
-    checks: [],
     userId: 1
   }
 }
